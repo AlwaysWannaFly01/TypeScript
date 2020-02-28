@@ -1,1 +1,1 @@
-var fn = () => 'response'
+var fn = function () { return 'hello world'; };
