@@ -88,5 +88,40 @@
         }
         throw new Error("ss");
     };
-    console.log(log(true));
+    // console.log(log(true));
+}
+{
+    var Movie = /** @class */ (function () {
+        function Movie(name, play) {
+            if (play === void 0) { play = 20; }
+            this.name = name;
+            this.play = play;
+        }
+        Movie.prototype.increment = function (param) {
+            this.play += param;
+        };
+        return Movie;
+    }());
+    var p = new Movie('ddd');
+    p.increment(2);
+    console.log(p);
+    console.log('~~~~~~~~~~____~~~~~~~~~~~');
+}
+{
+    // 枚举类型
+    // 值是数字序号，从0开始
+    // 可读性强
+    var DaysOfTheWeek = void 0;
+    (function (DaysOfTheWeek) {
+        DaysOfTheWeek[DaysOfTheWeek["SUN"] = 100] = "SUN";
+        DaysOfTheWeek[DaysOfTheWeek["MON"] = 101] = "MON";
+        DaysOfTheWeek[DaysOfTheWeek["TUE"] = 102] = "TUE";
+        DaysOfTheWeek[DaysOfTheWeek["WED"] = 103] = "WED";
+        DaysOfTheWeek[DaysOfTheWeek["THU"] = 104] = "THU";
+        DaysOfTheWeek[DaysOfTheWeek["FRI"] = 105] = "FRI";
+        DaysOfTheWeek[DaysOfTheWeek["STA"] = 106] = "STA";
+    })(DaysOfTheWeek || (DaysOfTheWeek = {}));
+    var day = void 0;
+    day = DaysOfTheWeek.MON;
+    console.log(day);
 }

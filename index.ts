@@ -97,6 +97,41 @@
         }
         throw new Error(`ss`)
     }
-    console.log(log(true));
-    
+    // console.log(log(true));
+
+}
+{
+    class Movie {
+        name: string
+        play: number
+        created_at: string
+        time: string
+
+        constructor(name: string, play: number = 20) {
+            this.name = name
+            this.play = play
+        }
+        increment(param: number) {
+            this.play += param
+        }
+    }
+
+    const p = new Movie('ddd')
+    p.increment(2)
+    console.log(p);
+    console.log('~~~~~~~~~~____~~~~~~~~~~~');
+}
+
+{
+    // 枚举类型
+    // 值是数字序号，从0开始
+    // 可读性强
+    enum DaysOfTheWeek {
+        // SUN = 100, MON, TUE, WED, THU, FRI, STA
+        sun = 10, mon, tue
+    }
+    let day: DaysOfTheWeek;
+    day = DaysOfTheWeek.sun
+    console.log(day);
+
 }
