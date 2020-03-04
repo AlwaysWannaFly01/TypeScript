@@ -132,7 +132,7 @@
         }
         return sum
     }
-    alert(sum(1, 2, 3, 4))
+    // alert(sum(1, 2, 3, 4))
 
     // es5中出现同名方法，下面的会替换上面的方法
     // function css(config) {
@@ -165,4 +165,158 @@
     // setTimeout(() => {
 
     // }, 900);
+}
+
+{
+    // es5中定义类
+    // function Person(name) {
+    //     this.name = name
+    //     this.run = function () {
+    //         console.log(this.name);
+    //     }
+    // }
+    // var person = new Person('awy')
+    // person.run()
+
+    //1:ts中定义类
+    // class Person {
+    //     name: string; //属性，前面省略类public关键词
+    //     constructor(n: string) {// 构造函数 实例化类的时候触发的方法
+    //         this.name = n
+    //     }
+    //     run(): void {
+    //         console.log(this.name);
+    //     }
+    //     getName(): string {
+    //         return this.name
+    //     }
+    //     setName(param): void {
+    //         this.name = param
+    //     }
+    // }
+    // let p1 = new Person('历史')
+    // p1.run()
+    // console.log(p1.getName());
+    // p1.setName('🥄')
+    // console.log(p1.getName());
+
+
+    //2:ts中实现继承 extends super
+    // class Person {
+    //     name: string
+    //     constructor(name: string) {
+    //         this.name = name
+    //     }
+    //     run(): string {
+    //         return `${this.name}在运动`
+    //     }
+    // }
+    // let p2 = new Person('是')
+    // console.log(p2.run());
+
+    // class Web extends Person {
+    //     constructor(name: string) {
+    //         super(name) // 初始化父类的构造函数
+    //     }
+    //     work() {
+    //         console.log(`${this.name}在工作`);
+    //     }
+    //     run(): string {
+    //         return `${this.name}在运动--子类`
+    //     }
+    // }
+
+    // let w = new Web('嗷嗷')
+    // console.log(w.run());
+    // w.work()
+
+
+    // 3.类里面的修饰符
+    // public:公有 ，在类里面，子类，类外面都可以访问
+    // class Person {
+    //     public name: string
+    //     constructor(name: string) {
+    //         this.name = name
+    //     }
+    //     run(): string {
+    //         return `${this.name}在运动`
+    //     }
+    // }
+
+    // class Web extends Person {
+    //     constructor(name: string) {
+    //         super(name) // 初始化父类的构造函数
+    //     }
+    //     work() {
+    //         console.log(`${this.name}在工作`);
+    //     }
+    //     run(): string {
+    //         return `${this.name}在运动--子类`
+    //     }
+    // }
+
+    // let w = new Web('打开')
+    // w.work()
+
+    // let p = new Person('哈哈哈')
+    // console.log(p.name);
+
+    // protected:保护类型 ，在类里面，子类里面可以访问，类外部无法访问
+
+    // class Person {
+    //     protected name: string
+    //     constructor(name: string) {
+    //         this.name = name
+    //     }
+    //     run(): string {
+    //         return `${this.name}在运动`
+    //     }
+    // }
+
+    // class Web extends Person {
+    //     constructor(name: string) {
+    //         super(name) // 初始化父类的构造函数
+    //     }
+    //     work() {
+    //         console.log(`${this.name}在工作`);
+    //     }
+    // }
+
+    // let w = new Web('解放军')
+    // w.work()
+
+    // // 类外部都没发访问保护类型的属性
+    // let p = new Person('类外部')
+    // console.log(p.name); // 浏览器能执行，但是在ts中是错误的写法，编译错误
+
+
+    // private:私有，在类里面可以访问，子类，类外部都 无法访问
+    class Person {
+        private name: string
+        constructor(name: string) {
+            this.name = name
+        }
+        run(): string {
+            return `${this.name}在运动`
+        }
+    }
+
+    class Web extends Person {
+        constructor(name: string) {
+            super(name) // 初始化父类的构造函数
+        }
+        work() {
+            console.log(`${this.name}在工作`);
+        }
+    }
+
+    // let w = new Web('解放军')
+    // w.work()// 子类无法访问
+
+    // let p = new Person('东方')
+    // console.log(p.name);// 类外部无法访问
+    // console.log(p.run());// 类里面可以访问
+    
+
+
 }
