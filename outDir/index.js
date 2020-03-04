@@ -143,6 +143,6 @@
     // alert(getInfo(88))
     // 箭头函数 es6
     // this指向上下文
-    setTimeout(function () {
-    }, 900);
+    // setTimeout(() => {
+    // }, 900);
 }
