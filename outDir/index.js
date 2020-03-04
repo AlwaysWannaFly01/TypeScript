@@ -266,28 +266,111 @@ var __extends = (this && this.__extends) || (function () {
     // let p = new Person('类外部')
     // console.log(p.name); // 浏览器能执行，但是在ts中是错误的写法，编译错误
     // private:私有，在类里面可以访问，子类，类外部都 无法访问
-    var Person = /** @class */ (function () {
-        function Person(name) {
-            this.name = name;
-        }
-        Person.prototype.run = function () {
-            return this.name + "\u5728\u8FD0\u52A8";
-        };
-        return Person;
-    }());
-    var Web = /** @class */ (function (_super) {
-        __extends(Web, _super);
-        function Web(name) {
-            return _super.call(this, name) || this; // 初始化父类的构造函数
-        }
-        Web.prototype.work = function () {
-            console.log(this.name + "\u5728\u5DE5\u4F5C");
-        };
-        return Web;
-    }(Person));
+    // class Person {
+    //     private name: string
+    //     constructor(name: string) {
+    //         this.name = name
+    //     }
+    //     run(): string {
+    //         return `${this.name}在运动`
+    //     }
+    // }
+    // class Web extends Person {
+    //     constructor(name: string) {
+    //         super(name) // 初始化父类的构造函数
+    //     }
+    //     work() {
+    //         console.log(`${this.name}在工作`);
+    //     }
+    // }
     // let w = new Web('解放军')
     // w.work()// 子类无法访问
     // let p = new Person('东方')
     // console.log(p.name);// 类外部无法访问
     // console.log(p.run());// 类里面可以访问
+}
+{
+    // 静态属性，静态方法
+    // class Person {
+    //     public name: string
+    //     public age: number = 90
+    //     static sex: string = '男'
+    //     constructor(parameters) {
+    //         this.name = parameters
+    //     }
+    //     run() { // 实例方法
+    //         console.log(`${this.name}在运动`);
+    //     }
+    //     work() {
+    //         console.log(`${this}在工作`);
+    //     }
+    //     static print() { // 静态方法
+    //         // console.log(`打印${this.age}岁`);// 静态方法不能直接调用类里面的属性
+    //         console.log(`打印${Person.sex}性别`);
+    //     }
+    // }
+    // // let p = new Person('张三')
+    // // p.run()
+    // Person.print() // 执行静态方法
+    // 多态： 父类定义一个方法不去实现，让继承它的子类去实现，每一个子类有不同的表现
+    // 属于继承的一种表现
+    // class Animal {
+    //     public name: string
+    //     constructor(parameters: string) {
+    //         this.name = parameters
+    //     }
+    //     eat() { // 具体吃什么不知道，由继承它的子类去实现，每一个子类的表现不一样
+    //         console.log(`吃的方法`);
+    //     }
+    // }
+    // class Dog extends Animal {
+    //     constructor(name: string) {
+    //         super(name)
+    //     }
+    //     eat() {
+    //         return this.name + '吃粮食'
+    //     }
+    // }
+    // class Cat extends Animal {
+    //     constructor(name: string) {
+    //         super(name)
+    //     }
+    //     eat() {
+    //         return this.name + '吃老鼠'
+    //     }
+    // }
+    // 抽象类
+    //typescript中的抽象类：它是提供其他类继承的基类，不能直接被实例化。
+    //用abstract关键字定义抽象类和抽象方法，抽象类中的抽象方法不包含具体实现并且必须在派生类中实现。
+    // abstract抽象方法只能放在抽象类里面
+    // 抽象类和抽象方法用来定义标准 。   
+    //标准：Animal 这个类要求它的子类必须包含eat方法
+    var Animal = /** @class */ (function () {
+        function Animal(name) {
+            this.name = name;
+        }
+        return Animal;
+    }());
+    // var a = new Animal() // 无法创建抽象类的实例
+    var Dog = /** @class */ (function (_super) {
+        __extends(Dog, _super);
+        function Dog(name) {
+            return _super.call(this, name) || this;
+        }
+        Dog.prototype.eat = function () {
+            console.log(this.name + '吃粮食');
+        };
+        return Dog;
+    }(Animal));
+    var d = new Dog('ss');
+    d.eat();
+    var Cat = /** @class */ (function (_super) {
+        __extends(Cat, _super);
+        function Cat(name) {
+            return _super.call(this, name) || this;
+        }
+        return Cat;
+    }(Animal));
+    var c = new Cat('hh'); // 非抽象类“Cat”不会实现继承自“Animal”类的抽象成员“eat”。
+    // c.eat()
 }
