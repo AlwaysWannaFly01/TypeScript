@@ -364,13 +364,39 @@ var __extends = (this && this.__extends) || (function () {
     }(Animal));
     var d = new Dog('ss');
     d.eat();
-    var Cat = /** @class */ (function (_super) {
-        __extends(Cat, _super);
-        function Cat(name) {
-            return _super.call(this, name) || this;
-        }
-        return Cat;
-    }(Animal));
-    var c = new Cat('hh'); // 非抽象类“Cat”不会实现继承自“Animal”类的抽象成员“eat”。
+    // class Cat extends Animal {
+    //     constructor(name: string) {
+    //         super(name)
+    //     }
+    // eat() {
+    //     console.log(this.name + '吃老鼠');
+    // }
+    // }
+    // var c = new Cat('hh') // 非抽象类“Cat”不会实现继承自“Animal”类的抽象成员“eat”。
     // c.eat()
+}
+{
+    // 原生js封装ajax
+    function ajax(config) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(config.type, config.url, true);
+        xhr.send(config.data);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log('成功');
+                if (config.dataType === 'json') {
+                    console.log(JSON.parse(xhr.responseText));
+                }
+                else {
+                    console.log(xhr.responseText);
+                }
+            }
+        };
+    }
+    ajax({
+        type: 'get',
+        data: 'name=zhangsan',
+        url: 'http://a.itying.com/api/productList',
+        dataType: 'json'
+    });
 }

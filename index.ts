@@ -405,14 +405,116 @@
     let d = new Dog('ss')
     d.eat()
 
-    class Cat extends Animal {
-        constructor(name: string) {
-            super(name)
-        }
-        // eat() {
-        //     console.log(this.name + '吃老鼠');
-        // }
-    }
-    var c = new Cat('hh') // 非抽象类“Cat”不会实现继承自“Animal”类的抽象成员“eat”。
+    // class Cat extends Animal {
+    //     constructor(name: string) {
+    //         super(name)
+    //     }
+    // eat() {
+    //     console.log(this.name + '吃老鼠');
+    // }
+    // }
+    // var c = new Cat('hh') // 非抽象类“Cat”不会实现继承自“Animal”类的抽象成员“eat”。
     // c.eat()
+}
+
+{
+    // 接口
+    // 1.属性接口
+    // function printLabel(): void {
+    //     console.log('printLabel');
+
+    // }
+    // printLabel()
+
+    // ts中定义方法传入参数
+    // function printLabel(label: string): void {
+    //     console.log('printLabel');
+
+    // }
+    // printLabel('hhh')
+
+    // ts中自定义方法传入参数对json进行约束
+    // function printLabel(labelInfo: { label: string }): void {
+    //     console.log('printLabel');
+    // }
+    // printLabel({ label: '张三' })
+
+    // 对批量方法传入参数进行约束
+
+    // 接口
+    // interface FullName {
+    //     firstName: string;
+    //     secondName: string
+    // }
+
+    // function printName(name: FullName) {
+    //     console.log(name.firstName + '-' + name.secondName);
+    // }
+    // function printInfo(info: FullName) {
+    //     // 传入对参数必须和接口中保持一致
+    //     console.log(info.firstName + info.secondName + info.age);
+    // }
+    // // 传入对象必须 包含firstName 和 secondName
+    // var obj = {
+    //     age: 99,
+    //     firstName: '张',
+    //     secondName: '三'
+    // }
+    // printName(obj)
+
+    // var info = {
+    //     age: 99,
+    //     firstName: '李',
+    //     secondName: '三'
+    // }
+    // printInfo(info)
+
+    //  接口，可选属性
+    // interface FullName {
+    //     firstName: string
+    //     secondName?: string // 可传可不传
+    // }
+    // function getName(name: FullName) {
+    //     console.log(name);
+
+    // }
+    // // 参数对顺序可不一致
+    // var obj = {
+    //     secondName: 'secondName',
+    //     firstName: 'firstName'
+    // }
+    // getName(obj)
+
+
+    interface Config {
+        type: string;
+        url: string;
+        data?: string;
+        dataType: string
+    }
+    // 原生js封装ajax
+    function ajax(config: Config) {
+        var xhr = new XMLHttpRequest()
+        xhr.open(
+            config.type, config.url, true
+        )
+        xhr.send(config.data)
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log('成功');
+                if (config.dataType === 'json') {
+                    console.log(JSON.parse(xhr.responseText));
+                } else {
+                    console.log(xhr.responseText);
+                }
+
+            }
+        }
+    }
+    ajax({
+        type: 'get',
+        data: 'name=zhangsan',
+        url: 'http://a.itying.com/api/productList',
+        dataType: 'json'
+    })
 }
