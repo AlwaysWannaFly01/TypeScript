@@ -31,7 +31,7 @@ var __extends = (this && this.__extends) || (function () {
     var newArr = [2, 3, 4];
     // console.log(newArr);
     // 元祖类型（tuple）属于数组的一种
-    var arr2 = [3, '99'];
+    var arr2_1 = [3, '99'];
     // 枚举
     // 如果标识符没有赋值，它的值就是下标
     // 后一项默认增1
@@ -362,8 +362,8 @@ var __extends = (this && this.__extends) || (function () {
         };
         return Dog;
     }(Animal));
-    var d = new Dog('ss');
-    d.eat();
+    var d_1 = new Dog('ss');
+    d_1.eat();
     // class Cat extends Animal {
     //     constructor(name: string) {
     //         super(name)
@@ -376,27 +376,181 @@ var __extends = (this && this.__extends) || (function () {
     // c.eat()
 }
 {
-    // 原生js封装ajax
-    function ajax(config) {
-        var xhr = new XMLHttpRequest();
-        xhr.open(config.type, config.url, true);
-        xhr.send(config.data);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log('成功');
-                if (config.dataType === 'json') {
-                    console.log(JSON.parse(xhr.responseText));
-                }
-                else {
-                    console.log(xhr.responseText);
-                }
-            }
+    // 接口
+    // 1.属性接口
+    // function printLabel(): void {
+    //     console.log('printLabel');
+    // }
+    // printLabel()
+    // ts中定义方法传入参数
+    // function printLabel(label: string): void {
+    //     console.log('printLabel');
+    // }
+    // printLabel('hhh')
+    // ts中自定义方法传入参数对json进行约束
+    // function printLabel(labelInfo: { label: string }): void {
+    //     console.log('printLabel');
+    // }
+    // printLabel({ label: '张三' })
+    // 对批量方法传入参数进行约束
+    // 接口
+    // interface FullName {
+    //     firstName: string;
+    //     secondName: string
+    // }
+    // function printName(name: FullName) {
+    //     console.log(name.firstName + '-' + name.secondName);
+    // }
+    // function printInfo(info: FullName) {
+    //     // 传入对参数必须和接口中保持一致
+    //     console.log(info.firstName + info.secondName + info.age);
+    // }
+    // // 传入对象必须 包含firstName 和 secondName
+    // var obj = {
+    //     age: 99,
+    //     firstName: '张',
+    //     secondName: '三'
+    // }
+    // printName(obj)
+    // var info = {
+    //     age: 99,
+    //     firstName: '李',
+    //     secondName: '三'
+    // }
+    // printInfo(info)
+    //  接口，可选属性
+    // interface FullName {
+    //     firstName: string
+    //     secondName?: string // 可传可不传
+    // }
+    // function getName(name: FullName) {
+    //     console.log(name);
+    // }
+    // // 参数对顺序可不一致
+    // var obj = {
+    //     secondName: 'secondName',
+    //     firstName: 'firstName'
+    // }
+    // getName(obj)
+    // interface Config {
+    //     type: string;
+    //     url: string;
+    //     data?: string;
+    //     dataType: string
+    // }
+    // // 原生js封装ajax
+    // function ajax(config: Config) {
+    //     var xhr = new XMLHttpRequest()
+    //     xhr.open(
+    //         config.type, config.url, true
+    //     )
+    //     xhr.send(config.data)
+    //     xhr.onreadystatechange = function () {
+    //         if (xhr.readyState === 4 && xhr.status === 200) {
+    //             console.log('成功');
+    //             if (config.dataType === 'json') {
+    //                 console.log(JSON.parse(xhr.responseText));
+    //             } else {
+    //                 console.log(xhr.responseText);
+    //             }
+    //         }
+    //     }
+    // }
+    // ajax({
+    //     type: 'get',
+    //     data: 'name=zhangsan',
+    //     url: 'http://a.itying.com/api/productList',
+    //     dataType: 'json'
+    // })
+}
+{
+    var md5 = function (key, value) {
+        return key + value;
+    };
+    console.log(md5('name', 'zhangsan'));
+    var sh = function (key, value) {
+        return key + '---' + value;
+    };
+    // ts定义数组
+    var arr = [22, 34];
+    var arr2 = ['s', 's'];
+    var arr3 = ['aaa', 'ddd'];
+    console.log(arr3);
+    var arr4 = { name: '张三', 3: '44' };
+    console.log(arr4);
+    var Dog = /** @class */ (function () {
+        function Dog(name) {
+            this.name = name;
+        }
+        Dog.prototype.eat = function () {
+            console.log(this.name + '吃骨头');
         };
-    }
-    ajax({
-        type: 'get',
-        data: 'name=zhangsan',
-        url: 'http://a.itying.com/api/productList',
-        dataType: 'json'
-    });
+        return Dog;
+    }());
+    var d = new Dog('小黑');
+    d.eat();
+    var Cat = /** @class */ (function () {
+        function Cat(name) {
+            this.name = name;
+        }
+        Cat.prototype.eat = function (food) {
+            console.log(this.name + '吃' + food);
+        };
+        ;
+        return Cat;
+    }());
+    var c = new Cat('小花');
+    c.eat('🐟');
+}
+{
+    // 接口扩展, 接口可以继承接口
+    // interface Animal {
+    //     eat(param: number): void;
+    // }
+    // interface Person extends Animal {
+    //     work(param: string): void;
+    // }
+    // class Web implements Person {
+    //     public name: string;
+    //     constructor(name: string) {
+    //         this.name = name
+    //     }
+    //     eat(param: number) {
+    //         console.log(this.name + param)
+    //     }
+    //     work(param: string) {
+    //         console.log(this.name + param)
+    //     }
+    // }
+    // let w = new Web('正在')
+    // w.eat(9)
+    // w.work('写代码')
+}
+{
+    var Programmner = /** @class */ (function () {
+        function Programmner(name) {
+            this.name = name;
+        }
+        Programmner.prototype.coding = function (code) {
+            console.log(this.name + code);
+        };
+        return Programmner;
+    }());
+    var Web = /** @class */ (function (_super) {
+        __extends(Web, _super);
+        function Web(name) {
+            return _super.call(this, name) || this;
+        }
+        Web.prototype.eat = function (param) {
+            console.log(this.name + param);
+        };
+        Web.prototype.work = function (param) {
+            console.log(this.name + param);
+        };
+        return Web;
+    }(Programmner));
+    var w = new Web('张三');
+    // w.eat(9)
+    w.work('写代码');
+    w.coding('写ts代码');
 }

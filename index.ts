@@ -486,35 +486,157 @@
     // getName(obj)
 
 
-    interface Config {
-        type: string;
-        url: string;
-        data?: string;
-        dataType: string
-    }
-    // 原生js封装ajax
-    function ajax(config: Config) {
-        var xhr = new XMLHttpRequest()
-        xhr.open(
-            config.type, config.url, true
-        )
-        xhr.send(config.data)
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log('成功');
-                if (config.dataType === 'json') {
-                    console.log(JSON.parse(xhr.responseText));
-                } else {
-                    console.log(xhr.responseText);
-                }
+    // interface Config {
+    //     type: string;
+    //     url: string;
+    //     data?: string;
+    //     dataType: string
+    // }
+    // // 原生js封装ajax
+    // function ajax(config: Config) {
+    //     var xhr = new XMLHttpRequest()
+    //     xhr.open(
+    //         config.type, config.url, true
+    //     )
+    //     xhr.send(config.data)
+    //     xhr.onreadystatechange = function () {
+    //         if (xhr.readyState === 4 && xhr.status === 200) {
+    //             console.log('成功');
+    //             if (config.dataType === 'json') {
+    //                 console.log(JSON.parse(xhr.responseText));
+    //             } else {
+    //                 console.log(xhr.responseText);
+    //             }
 
-            }
+    //         }
+    //     }
+    // }
+    // ajax({
+    //     type: 'get',
+    //     data: 'name=zhangsan',
+    //     url: 'http://a.itying.com/api/productList',
+    //     dataType: 'json'
+    // })
+}
+
+{
+    // 函数类型接口：对方法传入对参数以及返回值进行约束
+    // 加密对函数类型接口
+    interface encrypt {
+        (key: string, value: string): string;
+    }
+    var md5: encrypt = function (key: string, value: string): string {
+        return key + value
+    }
+    console.log(md5('name', 'zhangsan'));
+
+    var sh: encrypt = function (key: string, value: string): string {
+        return key + '---' + value
+    }
+
+    // ts定义数组
+    var arr: number[] = [22, 34]
+    var arr2: Array<string> = ['s', 's']
+
+    // 可索引接口，数组的约束(不常用)
+    interface UserArr {
+        [index: number]: string
+    }
+    var arr3: UserArr = ['aaa', 'ddd']
+    console.log(arr3);
+
+    // 可索引接口，对象的约束(不常用)
+    interface UserObj {
+        [index: string]: string
+    }
+    var arr4: UserObj = { name: '张三', 3: '44' }
+    console.log(arr4);
+
+    // 类类型接口：对类的约束 和抽象类有点相似
+    interface Animal {
+        name: string
+        eat(str): void;
+    }
+    class Dog implements Animal {
+        name: string
+        constructor(name: string) {
+            this.name = name
+        }
+        eat() {
+            console.log(this.name + '吃骨头');
         }
     }
-    ajax({
-        type: 'get',
-        data: 'name=zhangsan',
-        url: 'http://a.itying.com/api/productList',
-        dataType: 'json'
-    })
+    var d = new Dog('小黑')
+    d.eat()
+
+    class Cat implements Animal {
+        name: string
+        constructor(name: string) {
+            this.name = name
+        }
+        eat(food: string): void {
+            console.log(this.name + '吃' + food);
+        };
+    }
+    var c = new Cat('小花')
+    c.eat('🐟')
+}
+
+{
+    // 接口扩展, 接口可以继承接口
+    // interface Animal {
+    //     eat(param: number): void;
+    // }
+    // interface Person extends Animal {
+    //     work(param: string): void;
+    // }
+    // class Web implements Person {
+    //     public name: string;
+    //     constructor(name: string) {
+    //         this.name = name
+    //     }
+    //     eat(param: number) {
+    //         console.log(this.name + param)
+    //     }
+    //     work(param: string) {
+    //         console.log(this.name + param)
+    //     }
+    // }
+    // let w = new Web('正在')
+    // w.eat(9)
+    // w.work('写代码')
+}
+
+{
+    interface Animal {
+        eat(param: number): void;
+    }
+    interface Person extends Animal {
+        work(param: string): void;
+    }
+    class Programmner {
+        public name: string
+        constructor(name: string) {
+            this.name = name
+        }
+        coding(code: string) {
+            console.log(this.name + code);
+        }
+    }
+    class Web extends Programmner implements Person{
+        public name: string;
+        constructor(name: string) {
+            super(name)
+        }
+        eat(param: number) {
+            console.log(this.name + param)
+        }
+        work(param: string) {
+            console.log(this.name + param)
+        }
+    }
+    let w = new Web('张三')
+    // w.eat(9)
+    w.work('写代码')
+    w.coding('写ts代码')
 }
