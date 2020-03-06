@@ -554,3 +554,140 @@ var __extends = (this && this.__extends) || (function () {
     w.work('写代码');
     w.coding('写ts代码');
 }
+{
+    // 泛型：可以支持不特定的数据类型  要求:传入的类型和返回的类型一样
+    // T表示泛型，具体什么类型是调用这个方法时决定的
+    function getData(value) {
+        return value;
+    }
+    getData(123);
+    // getData<number>('123') // 错误写法
+    getData('aa');
+    // 类的泛型
+    var MinClass = /** @class */ (function () {
+        function MinClass() {
+            this.list = [];
+        }
+        MinClass.prototype.add = function (value) {
+            this.list.push(value);
+        };
+        MinClass.prototype.min = function () {
+            var min = this.list[0];
+            for (var i = 0; i < this.list.length; i++) {
+                if (min > this.list[i]) {
+                    min = this.list[i];
+                }
+            }
+            return min;
+        };
+        return MinClass;
+    }());
+    var m = new MinClass(); // 实例化类并且定义类类的T代表的类型是number
+    m.add(6);
+    m.add(3);
+    m.add(7);
+    m.add(4);
+    m.add(5);
+    console.log(m.min());
+    var m2 = new MinClass(); // 实例化类并且定义类类的T代表的类型是string
+    m2.add('c');
+    m2.add('b');
+    m2.add('f');
+    m2.add('a');
+    m2.add('e');
+    console.log(m2.min());
+    var setData = function (value) {
+        return value;
+    };
+    console.log(setData('name'));
+    var Mydata = function (value) {
+        return value;
+    };
+    console.log(Mydata('30'));
+}
+{
+    // 把类作为参数约束数据传入的类型
+    // class User {
+    //     username: string | undefined;
+    //     password: string | undefined;
+    // }
+    // class MysqlDb {
+    //     add(user: User): boolean {
+    //         console.log(user);
+    //         return true;
+    //     }
+    // }
+    // let u = new User()
+    // u.username = '张三'
+    // u.password = '123456'
+    // let db = new MysqlDb()
+    // db.add(u)
+    // class ArticleCate {
+    //     title: string | undefined;
+    //     desc: string | undefined;
+    //     status: number | undefined;
+    // }
+    // class MysqlDb {
+    //     add(info: ArticleCate): boolean {
+    //         console.log(info);
+    //         return true;
+    //     }
+    // }
+    // let a = new ArticleCate()
+    // a.title = 'title'
+    // a.desc = 'desc'
+    // a.status = 1
+    // let db = new MysqlDb()
+    // db.add(a)
+    //操作数据库的泛型类
+    var MysqlDb = /** @class */ (function () {
+        function MysqlDb() {
+        }
+        MysqlDb.prototype.add = function (info) {
+            console.log(info);
+            return true;
+        };
+        MysqlDb.prototype.updated = function (info, id) {
+            console.log(info);
+            console.log(id);
+            return true;
+        };
+        return MysqlDb;
+    }());
+    var User = /** @class */ (function () {
+        function User() {
+        }
+        return User;
+    }());
+    var u = new User();
+    u.username = '张三';
+    u.password = '123456';
+    var db = new MysqlDb();
+    db.add(u);
+    // 定义一个ArticleCate类和数据库进行映射
+    var ArticleCate = /** @class */ (function () {
+        function ArticleCate(params) {
+            this.title = params.title;
+            this.desc = params.desc;
+            this.status = params.status;
+        }
+        return ArticleCate;
+    }());
+    // 增加数据
+    // let a = new ArticleCate({
+    //     title: '分类',
+    //     desc: '描述',
+    //     // status: 0
+    // })
+    // // 类当作参数的泛型类
+    // let db2 = new MysqlDb<ArticleCate>()
+    // db2.add(a)
+    // 修改数据
+    var a = new ArticleCate({
+        title: '分类2',
+        desc: '描述2',
+        status: 0,
+    });
+    var db2 = new MysqlDb();
+    db2.updated(a, 9);
+}
