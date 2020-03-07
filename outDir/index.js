@@ -1,3 +1,4 @@
+"use strict";
 // 1.tsc --init
 // 2.修改tsconfig文件，输出目录
 // 3. 运行任务-监视tsconfig.json
@@ -14,6 +15,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+Object.defineProperty(exports, "__esModule", { value: true });
 {
     // 类型校验
     //数字类型
@@ -53,9 +55,9 @@ var __extends = (this && this.__extends) || (function () {
     // 任意类型
     var pp = 213;
     pp = 'ss';
-    var oBox = document.getElementById('box');
-    console.log(oBox);
-    oBox.style.color = 'red';
+    // var oBox: any = document.getElementById('box')
+    // console.log(oBox);
+    // oBox.style.color = 'red';
     // null和undefined 其它类型（never）的子类型
     var nu;
     // console.log(nu);
@@ -66,14 +68,14 @@ var __extends = (this && this.__extends) || (function () {
     var sc;
     // void类型，TypeScript的void表示没有任何类型，一般用于定义方法的时候没有返回值
     // 没有返回任何类型
-    function fn() {
+    var fn = function () {
         console.log(213);
-    }
+    };
     fn();
     // 返回number类型
-    function fn2() {
+    var fn2 = function () {
         return 9;
-    }
+    };
     fn2();
     // never类型
     // 是其他类型的子类型，代表从不会出现的值
@@ -120,7 +122,7 @@ var __extends = (this && this.__extends) || (function () {
     // }
     // alert(sum(1,2,3,4))
     // 三点运算符，接受传过来的值
-    function sum(a) {
+    var sum = function (a) {
         var result = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             result[_i - 1] = arguments[_i];
@@ -130,7 +132,7 @@ var __extends = (this && this.__extends) || (function () {
             sum += result[i];
         }
         return sum;
-    }
+    };
     // alert(sum(1, 2, 3, 4))
     // es5中出现同名方法，下面的会替换上面的方法
     // function css(config) {
@@ -557,9 +559,9 @@ var __extends = (this && this.__extends) || (function () {
 {
     // 泛型：可以支持不特定的数据类型  要求:传入的类型和返回的类型一样
     // T表示泛型，具体什么类型是调用这个方法时决定的
-    function getData(value) {
+    var getData = function (value) {
         return value;
-    }
+    };
     getData(123);
     // getData<number>('123') // 错误写法
     getData('aa');
@@ -690,4 +692,128 @@ var __extends = (this && this.__extends) || (function () {
     });
     var db2 = new MysqlDb();
     db2.updated(a, 9);
+    console.log('类当作参数的泛型类');
+}
+{
+    /*
+
+    功能：定义一个操作数据库的库  支持 Mysql Mssql  MongoDb
+
+    要求1：Mysql MsSql  MongoDb功能一样  都有 add  update  delete  get方法
+
+    注意：约束统一的规范、以及代码重用
+
+    解决方案：需要约束规范所以要定义接口 ，需要代码重用所以用到泛型
+
+    1、接口：在面向对象的编程中，接口是一种规范的定义，它定义了行为和动作的规范
+
+    2、泛型 通俗理解：泛型就是解决 类 接口 方法的复用性、
+    
+    */
+    // interface DBI<T> {
+    //     add(info: T): boolean;
+    //     update(info: T, id: number): boolean;
+    //     delete(id: number): boolean;
+    //     get(id: number): any[];
+    // }
+    // //  定义一个操作mysql数据库的类
+    // // ⚠️：要实现泛型接口，这个类也应该是一个泛型类
+    // class MysqlDb<T> implements DBI<T>{
+    //     add(info: T): boolean {
+    //         console.log(info);
+    //         return true
+    //     }
+    //     update(info: T, id: number): boolean {
+    //         throw new Error("Method not implemented.");
+    //     }
+    //     delete(id: number): boolean {
+    //         throw new Error("Method not implemented.");
+    //     }
+    //     get(id: number): any[] {
+    //         throw new Error("Method not implemented.");
+    //     }
+    // }
+    // //  定义一个操作mysql数据库的类
+    // class MssqlDb<T> implements DBI<T>{
+    //     // constructor(params) {
+    //     //     console.log('数据库建立连接');
+    //     // }
+    //     add(info: T): boolean {
+    //         console.log(info, 'MssqlDb');
+    //         return true
+    //     }
+    //     update(info: T, id: number): boolean {
+    //         throw new Error("Method not implemented.");
+    //     }
+    //     delete(id: number): boolean {
+    //         throw new Error("Method not implemented.");
+    //     }
+    //     get(id: number): any[] {
+    //         var list = [{ title: 'title', desc: 'desc' }]
+    //         return list
+    //     }
+    // }
+    // // 操作用户表 定义一个user类和数据表做映射
+    // // class User {
+    // //     username: string | undefined;
+    // //     password: string | undefined;
+    // // }
+    // // let u = new User()
+    // // u.username = '张三'
+    // // u.password = '123456'
+    // // let Mysql1 = new MysqlDb<User>()
+    // // Mysql1.add(u)
+    // class User {
+    //     username: string | undefined;
+    //     password: string | undefined;
+    // }
+    // let u = new User()
+    // u.username = '历史'
+    // u.password = '333'
+    // let Mysql2 = new MssqlDb<User>()
+    // Mysql2.add(u)
+    // // 获取user表🆔=4的数据
+    // let data = Mysql2.get(4)
+    // console.log(data)
+}
+// Ts的模块化
+// import { getData, save, dbUrl } from './modules/db';
+// {
+//     getData()
+//     save()
+//     console.log(dbUrl);
+// }
+// import { MysqlDb, MssqlDb } from './modules/db';
+// {
+//     console.log('~~~模块化封装数据库～～～');
+//     class User {
+//         username: string | undefined;
+//         password: string | undefined;
+//     }
+//     let u = new User()
+//     u.username = '问我'
+//     u.password = '123456'
+//     let Mysql1 = new MysqlDb<User>()
+//     Mysql1.add(u)
+// }
+/* 模块化封装db库 */
+var user_1 = require("./model/user");
+var articles_1 = require("./model/articles");
+{
+    // 增加数据
+    var u = new user_1.UserClass();
+    u.username = '复工';
+    u.password = '888';
+    user_1.UserModel.add(u);
+    // 获取user表数据
+    var res = user_1.UserModel.get(0);
+    console.log(res);
+    var obj = {
+        title: '标题',
+        desc: '描述',
+    };
+    var a = new articles_1.ArticleCateClass(obj);
+    articles_1.ArticleModel.add(a);
+    articles_1.ArticleModel.update(a, 8);
+    articles_1.ArticleModel.update(a, 99);
 }
