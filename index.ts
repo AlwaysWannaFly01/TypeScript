@@ -1021,3 +1021,288 @@ import { A, B } from './modules/a';
     let c = new B.Cat('反馈')
     c.eat('猫粮')
 }
+
+{
+    /*
+    装饰器:装饰器是一种特殊类型的声明，它能够被附加到类声明，方法，属性或参数上，可以修改类的行为。
+
+
+    通俗的讲装饰器就是一个方法，可以注入到类、方法、属性参数上来扩展类、属性、方法、参数的功能。
+    
+
+    常见的装饰器有：类装饰器、属性装饰器、方法装饰器、参数装饰器
+
+
+    装饰器的写法：普通装饰器（无法传参） 、 装饰器工厂（可传参）
+
+
+    装饰器是过去几年中js最大的成就之一，已是Es7的标准特性之一
+
+*/
+
+    //1、类装饰器：类装饰器在类声明之前被声明（紧靠着类声明）。 类装饰器应用于类构造函数，可以用来监视，修改或替换类定义。 传入一个参数
+    // let logClass = (param: any) => {
+    //     console.log(param);
+    //     // param 就是当前类
+    //     param.prototype.apiUrl = "xxx";
+    //     param.prototype.run = () => {
+    //         console.log('run方法');
+    //     }
+    // }
+    // @logClass
+    // class HttpClient {
+    //     constructor() {
+    //     }
+    //     getData() {
+    //     }
+    // }
+    // let http = new HttpClient()
+    // console.log(http.apiUrl);
+    // http.run()
+}
+{
+    // 1.2装饰器工厂
+    // let logClass = (param: string) => {
+    //     return (target: any) => {
+    //         console.log(param);
+    //         console.log(target);
+    //         target.prototype.apiUrl = param
+    //     }
+    // }
+    // @logClass('http://www.baidu.com')
+    // class HttpClient {
+    //     constructor() {
+    //     }
+    //     getData() {
+    //     }
+    // }
+    // let http = new HttpClient()
+    // console.log(http.apiUrl);
+}
+
+{
+    // 1、类装饰器
+
+    // 下面是一个重载构造函数的例子。
+
+    // 类装饰器表达式会在运行时当作函数被调用，类的构造函数作为其唯一的参数。
+
+    // 如果类装饰器返回一个值，它会使用提供的构造函数来替换类的声明。
+    // let logClass = (target: any) => {
+    //     console.log(target);
+    //     return class extends target {
+    //         apiUrl: any = '我是修改后的apiUrl'
+    //         getData() {
+    //             this.apiUrl = this.apiUrl + '----'
+    //             console.log(this.apiUrl);
+    //         }
+    //     }
+    // }
+    // @logClass
+    // class HttpClient {
+    //     public apiUrl: string | undefined
+    //     constructor() {
+    //         this.apiUrl = '我是构造函数中的apiUrl'
+    //     }
+    //     getData() {
+    //         console.log(this.apiUrl);
+    //     }
+    // }
+    // let http = new HttpClient()
+    // http.getData()
+}
+
+{
+    /*
+        2、属性装饰器
+        属性装饰器表达式会在运行时当作函数被调用，传入下列2个参数：
+        1、对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
+        2、成员的名字。
+    */
+    // let logClass = (param: string) => {
+    //     return (target: any) => {
+    //         // console.log(param);
+    //         // console.log(target);
+    //     }
+    // }
+    // let logProperty = (param: any) => {
+    //     return (target: any, attr: any) => {
+    //         console.log(param, 'param');
+    //         console.log(target);
+    //         console.log(attr);
+    //         target[attr] = param
+    //     }
+    // }
+
+    // @logClass('xxx')
+    // class HttpClient {
+    //     @logProperty('http://ddd.com')
+    //     public url: any | undefined
+    //     constructor() {
+    //     }
+    //     getData() {
+    //         console.log(this.url);
+    //     }
+    // }
+
+    // let http = new HttpClient()
+    // http.getData()
+}
+
+{
+    // 3、方法装饰器
+    //   它会被应用到方法的 属性描述符上，可以用来监视，修改或者替换方法定义。
+
+    //    方法装饰会在运行时传入下列3个参数：
+    //    1、对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
+    //    2、成员的名字。
+    //    3、成员的属性描述符。
+
+    //1.
+    // let get = (param: any) => {
+    //     return (target: any, methodName: any, desc: any) => {
+    //         console.log(target, 'target');
+    //         console.log(methodName, 'methodName');
+    //         console.log(desc, 'desc');
+    //         target.apiUrl = 'xxx'
+    //         target.run = () => {
+    //             console.log('run');
+    //         }
+    //     }
+    // }
+    // class HttpClient {
+    //     public url: any | undefined
+    //     constructor() {
+    //     }
+    //     @get('http://www.baidu.com')
+    //     getData() {
+    //         console.log(this.url);
+    //     }
+    // }
+    // let http: any = new HttpClient()
+    // console.log(http.apiUrl);
+    // http.run()
+
+    //2
+    // let get = (param: any) => {
+    //     return (target: any, methodName: any, desc: any) => {
+    //         // console.log(target, 'target');
+    //         // console.log(methodName, 'methodName');
+    //         // console.log(desc.value, 'desc');
+    //         // 修改装饰器的方法 把装饰器方法里面传入的所有参数改为string类型
+    //         // 1.保存当前的方法
+    //         let oMethod = desc.value;
+    //         desc.value = (...list: any[]) => {
+    //             list = list.map((value) => {
+    //                 return String(value)
+    //             })
+    //             console.log(list);
+    //             oMethod.apply(this, list)
+    //         }
+    //     }
+    // }
+    // class HttpClient {
+    //     public url: any | undefined
+    //     constructor() {
+    //     }
+    //     @get('http://www.baidu.com')
+    //     getData(...args: any[]) {
+    //         console.log(args);
+    //         console.log('我是getData里面的方法');
+    //     }
+    // }
+    // let http: any = new HttpClient();
+    // http.getData(123, 'ooo')
+}
+{
+    /*
+        4、方法参数装饰器 
+    
+            参数装饰器表达式会在运行时当作函数被调用，可以使用参数装饰器为类的原型增加一些元素数据 ，传入下列3个参数：
+    
+            1、对于静态成员来说是类的构造函数，对于实例成员是类的原型对象。
+            2、方法的名字。
+            3、参数在函数参数列表中的索引。
+    */
+    // let logParams = (params: any) => {
+    //     return (target: any, methodName: any, paramsIndex: any) => {
+    //         console.log(params, 'params');
+    //         console.log(target, 'target');
+    //         console.log(methodName, 'methodName');
+    //         console.log(paramsIndex, 'paramsIndex');
+    //         target.apiUrl = params
+    //     }
+    // }
+    // class HttpClient {
+    //     public url: any | undefined
+    //     constructor() {
+    //     }
+    //     getData(@logParams('xxx') uuid: any) {
+    //         console.log('我是getData里面的方法');
+    //         console.log(uuid); 
+    //     }
+    // }
+
+    // let http = new HttpClient()
+    // http.getData(123456)
+    // console.log(http.apiUrl);
+}
+
+{
+    //装饰器执行顺序
+
+    //属性 》方法 》方法参数 》类
+
+    // 如果有多个同样的装饰器，它会先执行后面的
+    let logClass1 = (params: any) => {
+        return (target: any) => {
+            console.log('类装饰器1');
+        }
+    }
+
+    let logClass2 = (params: any) => {
+        return (target: any) => {
+            console.log('类装饰器2');
+        }
+    }
+
+    let logAttribute = (params?: string) => {
+        return (target: any, attrName: any) => {
+            console.log('属性装饰器');
+        }
+    }
+    let logMethod = (params?: string) => {
+        return (target: any, attrName: any, desc: any) => {
+            console.log('方法装饰器');
+        }
+    }
+    let logParams1 = (params?: string) => {
+        return (target: any, attrName: any, desc: any) => {
+            console.log('方法参数装饰器1');
+        }
+    }
+    let logParams2 = (params?: string) => {
+        return (target: any, attrName: any, desc: any) => {
+            console.log('方法参数装饰器2');
+        }
+    }
+    @logClass1('http://www.yyy.com')
+    @logClass2('http://www.xxx.com')
+    class HttpClient {
+        @logAttribute()
+        public apiUrl: string | undefined
+        constructor() {
+
+        }
+        @logMethod()
+        getData() {
+            return true
+        }
+        setData(@logParams1() attr1: any, @logParams2() attr2: any) {
+
+        }
+
+    }
+    let http = new HttpClient()
+    http.getData()
+}
