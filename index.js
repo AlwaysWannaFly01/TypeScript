@@ -113,15 +113,12 @@
     // 可读性强
     var DaysOfTheWeek = void 0;
     (function (DaysOfTheWeek) {
-        DaysOfTheWeek[DaysOfTheWeek["SUN"] = 100] = "SUN";
-        DaysOfTheWeek[DaysOfTheWeek["MON"] = 101] = "MON";
-        DaysOfTheWeek[DaysOfTheWeek["TUE"] = 102] = "TUE";
-        DaysOfTheWeek[DaysOfTheWeek["WED"] = 103] = "WED";
-        DaysOfTheWeek[DaysOfTheWeek["THU"] = 104] = "THU";
-        DaysOfTheWeek[DaysOfTheWeek["FRI"] = 105] = "FRI";
-        DaysOfTheWeek[DaysOfTheWeek["STA"] = 106] = "STA";
+        // SUN = 100, MON, TUE, WED, THU, FRI, STA
+        DaysOfTheWeek[DaysOfTheWeek["sun"] = 10] = "sun";
+        DaysOfTheWeek[DaysOfTheWeek["mon"] = 11] = "mon";
+        DaysOfTheWeek[DaysOfTheWeek["tue"] = 12] = "tue";
     })(DaysOfTheWeek || (DaysOfTheWeek = {}));
     var day = void 0;
-    day = DaysOfTheWeek.MON;
+    day = DaysOfTheWeek.sun;
     console.log(day);
 }
